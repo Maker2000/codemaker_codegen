@@ -1,0 +1,15 @@
+targets:
+  $default:
+    builders:
+      codemaker_codegen|codemaker_annotations:
+        enabled: true
+
+builders:
+  codemaker_codegen:
+    target: ":codemaker_codegen"
+    import: "package:codemaker_codegen/codemaker_codegen.dart"
+    builder_factories: ["generateNameOfClass"]
+    build_extensions: { ".dart": [".g.dart"] }
+    auto_apply: dependents
+    build_to: cache
+    applies_builders: ["source_gen|combining_builder"]
