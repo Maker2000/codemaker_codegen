@@ -9,11 +9,16 @@ class ModelVisitor extends SimpleElementVisitor<void> {
   void visitConstructorElement(ConstructorElement element) {
     final returnType = element.returnType.toString();
     className = returnType.replaceFirst('*', '');
-    if (element.periodOffset == null) {
+    if (element.periodOffset == null && element.isFactory) {
       for (var element in element.parameters) {
         fields[element.name] =
             element.type.getDisplayString(withNullability: false);
       }
     }
+  }
+
+  @override
+  void visitFieldElement(FieldElement element) {
+    fields[element.name] = element.type.toString().replaceFirst('*', '');
   }
 }
